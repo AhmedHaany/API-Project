@@ -30,6 +30,8 @@ namespace E_CommerceAPI.Controllers
 			})
 			.ToArray();
 		}
+		[HttpGet]
+		[Route("G")]
 		public IEnumerable<WeatherForecast> Get1()
 		{
 			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
