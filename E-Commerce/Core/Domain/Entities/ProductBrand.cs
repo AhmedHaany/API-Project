@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-	internal class ProductPrand
+	public class ProductBrand : BaseEntity<int>
 	{
+		public string Name { get; set; }
 	}
+
+
 }
