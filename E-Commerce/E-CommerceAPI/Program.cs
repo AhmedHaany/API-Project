@@ -1,19 +1,22 @@
 
+using Domain.Contracts;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using PersistenceLayer;
 using PersistenceLayer.Data;
 
 namespace E_CommerceAPI
 {
 	public class Program
 	{
-		public static void Main(string[] args)
+		public static async Task Main(string[] args)
 		{
 			var builder = WebApplication.CreateBuilder(args);
 
 			// Add services to the DI container.
 
 			builder.Services.AddControllers();
+			builder.Services.AddScoped<IDbInitializer,DbInitializer>();
 			builder.Services.AddDbContext<StoreContext>(options =>
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
@@ -24,6 +27,7 @@ namespace E_CommerceAPI
 
 			var app = builder.Build();
 
+			await InitializeDbAsync(app);
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
@@ -39,6 +43,16 @@ namespace E_CommerceAPI
 			app.MapControllers();
 
 			app.Run();
+
+			async Task InitializeDbAsync(WebApplication app)
+			{
+				using var scope = app.Services.CreateScope();
+
+				var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+				await dbInitializer.InitializeAsync();
+			}
 		}
+
+		
 	}
 }

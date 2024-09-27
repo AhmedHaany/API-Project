@@ -15,13 +15,17 @@ namespace PersistenceLayer.Data.Configurations
 		{
 			builder.HasOne(Product => Product.ProductBrand).
 				WithMany()
-				.HasForeignKey(Product => Product.BrandId);
+				.HasForeignKey(Product => Product.BrandId)
+				.OnDelete(DeleteBehavior.Restrict); // Avoid cascade deletes
+			;
 
 			builder.HasOne(Product=> Product.ProductType)
 				.WithMany() 
-				.HasForeignKey(Product => Product.TypeId);
+				.HasForeignKey(Product => Product.TypeId)
+								.OnDelete(DeleteBehavior.Restrict); // Avoid cascade deletes
 
-			builder.Property(Product => Product.TypeId)
+
+			builder.Property(Product => Product.Price)
 				.HasColumnType("decimal(18,3)");
 
 
