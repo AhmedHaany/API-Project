@@ -4,6 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using PersistenceLayer;
 using PersistenceLayer.Data;
+using PersistenceLayer.Data.Repostories;
 
 namespace E_CommerceAPI
 {
@@ -17,6 +18,9 @@ namespace E_CommerceAPI
 
 			builder.Services.AddControllers();
 			builder.Services.AddScoped<IDbInitializer,DbInitializer>();
+			builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+			builder.Services.AddAutoMapper(typeof(Services.AssemblyReference).Assembly );
+
 			builder.Services.AddDbContext<StoreContext>(options =>
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));

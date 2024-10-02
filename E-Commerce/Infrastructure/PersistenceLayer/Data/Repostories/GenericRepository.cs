@@ -22,7 +22,7 @@ namespace PersistenceLayer.Data.Repostories
 		public  void Delete(TEntity entity) => _storeContext.Set<TEntity>().Remove(entity);
 
 
-		public async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges)
+		public async Task<IEnumerable<TEntity>> GetAllAsync(bool trackChanges = false)
 		{
 			return trackChanges
 				? await _storeContext.Set<TEntity>().ToListAsync()
