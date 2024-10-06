@@ -2,9 +2,12 @@
 using Domain.Contracts;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using PersistenceLayer;
 using PersistenceLayer.Data;
 using PersistenceLayer.Data.Repostories;
+using Services;
+using Services.Abstractions;
 
 namespace E_CommerceAPI
 {
@@ -16,9 +19,10 @@ namespace E_CommerceAPI
 
 			// Add services to the DI container.
 
-			builder.Services.AddControllers();
+			builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 			builder.Services.AddScoped<IDbInitializer,DbInitializer>();
 			builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+			builder.Services.AddScoped<IServiceManager,ServiceManager>();
 			builder.Services.AddAutoMapper(typeof(Services.AssemblyReference).Assembly );
 
 			builder.Services.AddDbContext<StoreContext>(options =>

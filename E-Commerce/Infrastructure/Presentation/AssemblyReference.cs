@@ -4,12 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shared
+namespace Presentation
 {
-	public record TypeResultDTO
+	public class AssemblyReference
 	{
-		public int Id { get; set; }
-		public string Name { get; set; }
 	}
 }
- 
