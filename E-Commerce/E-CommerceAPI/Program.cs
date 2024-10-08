@@ -2,12 +2,16 @@
 using Domain.Contracts;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using PersistenceLayer;
 using PersistenceLayer.Data;
+using PersistenceLayer.Repostories;
+using Services;
+using Services.Abstractions;
 
 namespace E_CommerceAPI
 {
-	public class Program
+    public class Program
 	{
 		public static async Task Main(string[] args)
 		{
@@ -15,8 +19,12 @@ namespace E_CommerceAPI
 
 			// Add services to the DI container.
 
-			builder.Services.AddControllers();
+			builder.Services.AddControllers().AddApplicationPart(typeof(Presentation.AssemblyReference).Assembly);
 			builder.Services.AddScoped<IDbInitializer,DbInitializer>();
+			builder.Services.AddScoped<IUnitOfWork,UnitOfWork>();
+			builder.Services.AddScoped<IServiceManager,ServiceManager>();
+			builder.Services.AddAutoMapper(typeof(Services.AssemblyReference).Assembly );
+
 			builder.Services.AddDbContext<StoreContext>(options =>
 			{
 				options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
@@ -34,7 +42,7 @@ namespace E_CommerceAPI
 				app.UseSwagger();
 				app.UseSwaggerUI();
 			}
-
+			app.UseStaticFiles();
 			app.UseHttpsRedirection();
 
 			app.UseAuthorization();
