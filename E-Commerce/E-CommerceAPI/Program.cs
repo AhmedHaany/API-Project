@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using PersistenceLayer;
 using PersistenceLayer.Data;
-using PersistenceLayer.Data.Repostories;
+using PersistenceLayer.Repostories;
 using Services;
 using Services.Abstractions;
 
 namespace E_CommerceAPI
 {
-	public class Program
+    public class Program
 	{
 		public static async Task Main(string[] args)
 		{

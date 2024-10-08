@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 
 namespace Services.Specifications
 {
-	internal class ProductWithBrandAndSpecifications :Specifications<Product>
+	internal class ProductWithBrandAndTypeSpecifications :Specifications<Product>
 	{
-		public ProductWithBrandAndSpecifications(int id):base(product=> product.Id==id )
+		public ProductWithBrandAndTypeSpecifications(int id):base(product=> product.Id==id )
 		{
 			AddInclude(product=>product.ProductBrand);
 			AddInclude(product=>product.ProductType);
 		}
 
-		public ProductWithBrandAndSpecifications() : base(null)
+		public ProductWithBrandAndTypeSpecifications() : base(null)
 		{
 			AddInclude(product => product.ProductBrand);
 			AddInclude(product => product.ProductType);
