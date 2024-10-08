@@ -27,7 +27,18 @@ namespace PersistenceLayer.Repostories
                 query,
                 (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
 
-            return query;
+
+            if(specifications.OrderBy is not null)
+                query = query.OrderBy(specifications.OrderBy);
+
+             
+
+           else if (specifications.OrderByDescending is not null)
+				query = query.OrderBy(specifications.OrderByDescending);
+
+
+
+			return query;
 
         }
     }
